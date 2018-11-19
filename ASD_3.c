@@ -5,6 +5,27 @@
 	int chc = 0;
 	int eqc = 0;
 
+void insertionSort(int a[], int n) 
+{ 
+   int i, key, j; 
+   for (i = 1; i < n; i++) 
+   { 
+       key = a[i]; 
+       j = i-1; 
+  	   chc++;
+  	   eqc++;
+       while (j >= 0 && a[j] > key) 
+       { 
+           a[j+1] = a[j]; 
+           j = j-1; 
+           eqc+=2;
+           chc++;
+       } 
+       a[j+1] = key;
+	   chc++; 
+   } 
+}
+
 void quickSort(int a[], int left, int right) {
 	
     int i = left, j = right;
@@ -146,11 +167,6 @@ int main() {
 			break;
 		}
   }
-  
-  	/*//output
-	for (i = 0; i<n; i++)  
-      printf("%d ", a[i]);
-    printf("\n"); */
     
   printf("Choose the sort: \n");
   printf("1 - Insert sort \n");
@@ -164,25 +180,7 @@ int main() {
   	scanf("%i", &choice);
   	if (choice==1)
   	{
-  		 //insert sort
-	   for (i = 1; i < n; i++) 
-	   { 
-	       temp = a[i]; 
-	       j = i-1; 
-	       chc++;
-	       eqc++;
-	  
-	    while (j >= 0 && a[j] > temp) 
-	    { 
-	        a[j+1] = a[j]; 
-	        j = j-1; 
-	        eqc+= 2;
-	        chc++;
-	    } 
-	    a[j+1] = temp;
-		chc++; 
-	    
-	   }
+  		 insertionSort(a, n);
   		break;
 	}
 	else if (choice==2)
@@ -197,11 +195,6 @@ int main() {
 		}
   }
     
-  
-  /*//output
-  for (i = 0; i<n; i++)  
-      printf("%d ", a[i]);
-    printf("\n");*/
     
   printf("Number of changes = %d\n", chc);
   printf("Number of equals = %d", eqc);   
