@@ -91,7 +91,7 @@ void countSort(int a[], int n, int exp)
 	for (i = n - 1; i >= 0; i--)
 	{
 		output[count[(a[i] / exp) % 10] - 1] = a[i];
-		chc++;
+		chc+=2;
 		eqc++;
 		count[(a[i] / exp) % 10]--;
 	}
@@ -117,7 +117,7 @@ void radixsort(int a[], int n)
 			chc++;
 		}
 		
-		eqc++;
+		eqc+=2;
 	}
 				
 	for (exp = 1; max/exp > 0; exp *= 10)
