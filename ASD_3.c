@@ -4,6 +4,13 @@
 
 	int chc = 0;
 	int eqc = 0;
+	
+void swap(int* a, int* b) 
+{ 
+    int t = *a; 
+    *a = *b; 
+    *b = t; 
+} 
 
 void insertionSort(int a[], int n) 
 { 
@@ -13,59 +20,51 @@ void insertionSort(int a[], int n)
        key = a[i]; 
        j = i-1; 
   	   chc++;
-  	   eqc++;
        while (j >= 0 && a[j] > key) 
        { 
            a[j+1] = a[j]; 
            j = j-1; 
-           eqc+=2;
            chc++;
        } 
        a[j+1] = key;
 	   chc++; 
+	   eqc++;
    } 
 }
 
-void quickSort(int a[], int left, int right) {
-	
-    int i = left, j = right;
-    int tmp;
-    int pivot = a[(left + right) / 2];
- 
-    //partition
-    while (i <= j) {
-        while (a[i] < pivot)
-        {
-        	i++;
-        	eqc++;
-		}
+int partition (int a[], int low, int high) 
+{ 
+    int pivot = a[high]; 
+    int i = (low - 1);  
+  	int j;
+    for (j = low; j <= high- 1; j++) 
+    { 
+		eqc++;
+        if (a[j] <= pivot) 
+        { 
+            i++;   
+            swap(&a[i], &a[j]); 
+            chc+=3;
+        } 
+      
+    } 
+    swap(&a[i + 1], &a[high]); 
+    chc++;
+    return (i + 1); 
+} 
+
+void quickSort(int a[], int low, int high) 
+{ 
+    if (low < high) 
+    { 
         
-        while (a[j] > pivot)
-        {
-        	j--;
-        	eqc++;
-		}
+        int pi = partition(a, low, high); 
+  
         
-        if (i <= j) {
-            tmp = a[i];
-            a[i] = a[j];
-            a[j] = tmp;
-            i++;
-            j--;
-            chc++;
-        }
-        eqc++;
-    };
- 
-    //recursion 
-    if (left < j)
-    	quickSort(a, left, j);
-    eqc++;
-    
-    if (i < right)
-    	quickSort(a, i, right);
-    eqc++;
-}
+        quickSort(a, low, pi - 1); 
+        quickSort(a, pi + 1, high); 
+    } 
+} 
 
 
 void countSort(int a[], int n, int exp)
@@ -75,15 +74,12 @@ void countSort(int a[], int n, int exp)
 	for (i = 0; i < n; i++)
 	{
 		count[(a[i] / exp) % 10]++;
-		chc++;
-		eqc++;
 	}
 		
 		
 	for (i = 1; i < 10; i++)
 	{
 		chc++;
-		eqc++;
 		count[i] += count[i-1];
 	}
 		
@@ -91,18 +87,14 @@ void countSort(int a[], int n, int exp)
 	for (i = n - 1; i >= 0; i--)
 	{
 		output[count[(a[i] / exp) % 10] - 1] = a[i];
-		chc+=2;
-		eqc++;
+		chc++;
 		count[(a[i] / exp) % 10]--;
 	}
 	
 	for (i = 0; i < n; i++)
 	{
 		a[i] = output[i];
-		chc++;
-		eqc++;
-	}
-		
+	}	
 }
  
 void radixsort(int a[], int n)
@@ -117,7 +109,7 @@ void radixsort(int a[], int n)
 			chc++;
 		}
 		
-		eqc+=2;
+		eqc++;
 	}
 				
 	for (exp = 1; max/exp > 0; exp *= 10)
@@ -195,9 +187,7 @@ int main() {
 		}
   }
     
-    
   printf("Number of changes = %d\n", chc);
   printf("Number of equals = %d", eqc);   
-    
 	return 0;
 }
