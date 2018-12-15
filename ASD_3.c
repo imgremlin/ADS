@@ -4,13 +4,6 @@
 
 	int chc = 0;
 	int eqc = 0;
-	
-void swap(int* a, int* b) 
-{ 
-    int t = *a; 
-    *a = *b; 
-    *b = t; 
-} 
 
 void insertionSort(int a[], int n) 
 { 
@@ -28,7 +21,6 @@ void insertionSort(int a[], int n)
        } 
        a[j+1] = key;
 	   chc++; 
-	   eqc++;
    } 
 }
 
@@ -66,7 +58,6 @@ void quickSort(int a[], int low, int high)
     } 
 } 
 
-
 void countSort(int a[], int n, int exp)
 {
 	int output[n], i, count[10] = {0};
@@ -74,6 +65,7 @@ void countSort(int a[], int n, int exp)
 	for (i = 0; i < n; i++)
 	{
 		count[(a[i] / exp) % 10]++;
+		chc++;
 	}
 		
 		
@@ -94,6 +86,7 @@ void countSort(int a[], int n, int exp)
 	for (i = 0; i < n; i++)
 	{
 		a[i] = output[i];
+		chc++;
 	}	
 }
  
@@ -138,7 +131,7 @@ int main() {
   	{
   			for (i = 0; i<n; i++)
   			{
-      			a[i] = 0 + rand() %100;
+      			a[i] = rand() %100000;
  			}
   		break;
 	}
