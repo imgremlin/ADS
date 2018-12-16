@@ -3,29 +3,30 @@
 #include <string.h>
 #include <conio.h>
 #include <time.h>
-#define N 70
+#define N 50
 
 
-typedef struct book_list{
-  	char *title;
-  	int *year;
-  	struct book_list * next;
+typedef struct pass_list{
+  	char *series;
+  	int *number;
+  	struct pass_list * next;
 }book_list; 
 
 
 void settings(void){
-	printf ("\nList of available actions: \n1-adding an element to the tail of the list \
-	\n2-removing an element from the head of the list \
-	\n3-reverse \
-	\n4-output the entire list in the format Title - year \
-	\n5-delete the entire list \
-	\n0-finish work\n");
+	printf("What can you do: \n");
+	printf("1.Add to the list \n");
+	printf("2.Remove item from the list \n");
+	printf("3.Reverse the list \n");
+	printf("4.Print the list \n");
+	printf("5.Delete the list \n");
+	printf("0.Exit \n");
 }
 
-book_list *init(char *title, int *year){ 
+pass_list *init(char *series, int *number){ 
 	book_list *temp = (book_list *) malloc(sizeof(book_list)); 
-	temp->title = title; 
-	temp->year = year; 
+	temp->series = series; 
+	temp->number = number; 
 	temp->next = NULL; 
 	return temp; 
 }
@@ -41,30 +42,30 @@ char* input_string (char *message){
 }
 
 
-void add_book (book_list *head, char *title, int *year){ 
- 	book_list *temp = (book_list*)malloc(sizeof(book_list));
+void add_pass (pass_list *head, char *series, int *number){ 
+ 	pass_list *temp = (pass_list*)malloc(sizeof(pass_list));
 	while(head->next) head=head->next;
 	head->next=temp; 
-	temp->title=title; 
-	temp->year=year; 
+	temp->series=series; 
+	temp->number=number; 
 	temp->next = NULL; 
 }
 
 
 
-void print_list (book_list *head){ 
+void print_list (pass_list *head){ 
  	
  	 
 	 if (head==NULL) {
-		printf ("--The list is empty--\n");
+		printf ("list is empty\n");
 		return;
 	}
 	 else
 	 {
-	 book_list *temp=head;
+	 pass_list *temp=head;
 	 	do
 		{
-  			printf ("%s - %d\n", temp->title ,*(temp->year));  
+  			printf ("%s - %d\n", temp->series ,*(temp->number));  
   			if (temp->next == NULL) break;
   			temp = temp->next;
  		} while (temp);
@@ -73,39 +74,39 @@ void print_list (book_list *head){
  	
 }
 
-void delete_head (book_list **head){
- 	if (head==NULL) printf("--Nothing to delete--\n");
+void delete_head (pass_list **head){
+ 	if (head==NULL) printf("dont know what to delete\n");
  	else
 	{ 
-  		book_list *ptr = *head;
+  		pass_list *ptr = *head;
   		*head=(*head)->next;
-  		free(ptr->title);
-  		free(ptr->year);
+  		free(ptr->series);
+  		free(ptr->number);
   		free(ptr);
  	}
 }
 
-void clear_list(book_list **head){
-	book_list *temp, *t=(*head)->next;
+void clear_list(pass_list **head){
+	pass_list *temp, *t=(*head)->next;
 	if (*head != NULL)
 		while (*head != NULL)
 		{
 			temp=(*head)->next;
-			free((*head)->title);
-			free((*head)->year);
+			free((*head)->series);
+			free((*head)->number);
 			free(*head);
 			*head=temp;
 		}		
-	else printf ("--List deleted--\n");
+	else printf ("list deleted\n");
 	*head=NULL;
 	return;
 }
 
 
-book_list* reverse_list(book_list *first){
-  book_list * reverse_done = NULL;
-  book_list * node;
-  book_list * nnode;
+  pass_list* reverse_list(pass_list *first){
+  pass_list * reverse_done = NULL;
+  pass_list * node;
+  pass_list * nnode;
   
   for (node = first; node != NULL; node = nnode){
     nnode = node -> next;
@@ -118,65 +119,65 @@ book_list* reverse_list(book_list *first){
 int main() { 
 
   	char in, n, i;
-  	char *title;
-  	printf("\nPlease input started number of books: "); 
+  	char *series;
+  	printf("Insert amount of passports: \n"); 
 	scanf("%d", &n);
-	int *year = (int*)malloc(sizeof(int)); 
-	title = input_string("title"); 
-	printf("Input year:\t");
-	scanf("%d", year);
-	book_list *head = init(title, year);
+	int *number = (int*)malloc(sizeof(int)); 
+	series = input_string("series"); 
+	printf("Insert number:\t");
+	scanf("%d", number);
+	pass_list *head = init(series, number);
 	for (i=1; i<n; i++)
 	{
-		title = input_string("title");
-		printf("Input year:\t"); 
-		year = (int*)malloc(sizeof(int)); 
-		scanf("%d", year); 
-		add_book(head, title, year); 
+		series = input_string("series");
+		printf("Insert number:\t"); 
+		number = (int*)malloc(sizeof(int)); 
+		scanf("%d", number); 
+		add_pass(head, series, number); 
 	}
 	
 	settings();
-  	printf ("\nSelect an command from the list: ");
+  	printf ("Choose what to do: \n");
   	scanf ("%d",&in);
   	
   	while (in >= 0){
 		switch (in)
 		{	
    		case 1: 
-		   		title = input_string("title"); 
-		   		printf("Input Year:\t"); 
-				year = (int*)malloc(sizeof(int));
-				scanf("%d", year); 
-				add_book(head, title, year);
-	   			printf ("--OPERATION COMPLETED--\n");
+		   		series = input_string("series"); 
+		   		printf("Insert number:\t"); 
+				number = (int*)malloc(sizeof(int));
+				scanf("%d", number); 
+				add_pass(head, series, number);
+	   			printf ("well done\n");
   		break;
    
    		case 2: delete_head (&head);
-    			printf ("--OPERATION COMPLETED--\n");
+    			printf ("well done\n");
     	break;
     
    		case 3: head=reverse_list(head);
-   				printf ("--OPERATION COMPLETED--\n");
+   				printf ("well done\n");
    		break;
    
    		case 4: print_list (head);
-   				printf ("--OPERATION COMPLETED--\n");
+   				printf ("well done\n");
   		break;
    
    		case 5: clear_list (&head);
-    			printf ("--OPERATION COMPLETED--\n");
+    			printf ("well done\n");
     	break;
     
    		case 0: exit (0);
-   				printf ("--OPERATION COMPLETED--\n");
+   				printf ("well done\n");
    		break;
    
    		default:
-				printf ("\nSelect an existing command from the list: ");
+				printf ("Choose what to do: \n");
 				settings();
 		break;
   		}
-  	printf ("\nSelect an command from the list: ");
+  	printf ("Choose what to do: \n");
 	scanf ("%d", &in);
  	}
 return 0;
